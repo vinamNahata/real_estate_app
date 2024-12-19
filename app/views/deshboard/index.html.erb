@@ -1,0 +1,16 @@
+<h1>Deshboard#index</h1>
+<p>Find me in app/views/deshboard/index.html.erb</p>
+<h1>Properties</h1>
+<div class="properties">
+  <% @properties.each do |property| %>
+    <div class="property-card">
+      <h2><%= property.name %></h2>
+      <p><%= property.description %></p>
+      <p><strong>Price:</strong> Rs.<%= property.price %></p>
+    </div>
+  <% end %>
+</div>
+<%= link_to 'Sale Property', new_property_path, class: '' %>
+
+<%= link_to 'logout', destroy_user_session_path,
+  data: {turbo_method: :delete, turbo_confirm: 'are you sure?'}%>

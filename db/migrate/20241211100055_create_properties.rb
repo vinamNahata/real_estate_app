@@ -4,6 +4,7 @@ class CreateProperties < ActiveRecord::Migration[7.1]
       t.string :name
       t.text :description
       t.decimal :price
+      t.string :location 
       t.references :user, null: false, foreign_key: true
 
       t.timestamps

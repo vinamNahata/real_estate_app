@@ -1,0 +1,9 @@
+<div class="property-card">
+  <h3><%= property.name %></h3>
+  <p><%= property.description %></p>
+  <p>Price: <%= number_to_currency(property.price) %></p>
+  <div class="actions">
+    <%= button_to 'Interested', interested_property_path(property), method: :post, class: 'btn btn-secondary' %>
+    <%= link_to 'View Details', property_path(property), class: 'btn btn-primary' %>
+  </div>
+</div>

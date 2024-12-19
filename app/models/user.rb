@@ -4,7 +4,7 @@ class User < ApplicationRecord
   enum role: { buyer: 0, seller: 1, admin: 2 }
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
+
   has_many :properties, dependent: :destroy, foreign_key: :user_id
   has_many :bookings, dependent: :destroy
   has_many :enquiries, dependent: :destroy
@@ -14,7 +14,6 @@ class User < ApplicationRecord
 
 
         
-  validates :role, presence: true
   validates :name, presence: true
-  validates :contact, presence: true, format: { with: /\A\d{10}\z/, message: "must be a valid 10-digit number" }
+  #validates :contact, presence: true, format: { with: /\A\d{10}\z/, message: "must be a valid 10-digit number" }
 end
