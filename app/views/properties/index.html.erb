@@ -4,6 +4,11 @@
 <% if @properties.any? %>
   <% @properties.each do |property| %>
     <div class="property-card">
+    <% if property.image.attached? %>
+    <%= image_tag property.image, class: "property-image", alt: "Property Image" %>
+  <% else %>
+    <p>No image available</p>
+  <% end %>
       <h3><%= property.name %></h3>
       <p><%= property.description %></p>
       <p><%= property.location %></p>

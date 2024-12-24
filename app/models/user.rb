@@ -10,8 +10,13 @@ class User < ApplicationRecord
   has_many :enquiries, dependent: :destroy
   has_many :transactions, dependent: :destroy
   has_many :histories, dependent: :destroy
+  after_create :send_welcome_email
 
+private
 
+def send_welcome_email
+  UserMailer.welcome_email(self).deliver_now
+end
 
         
   validates :name, presence: true

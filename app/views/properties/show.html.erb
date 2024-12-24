@@ -1,3 +1,7 @@
 <h1><%= @property.name %></h1>
 <p><%= @property.description %></p>
-<p>Price: <%= number_to_currency(@property.price) %></p>
+<p>Price: <%= number_to_currency(@property.price) %></p> <% if property.image.attached? %>
+<%= image_tag property.image, class: "property-image", alt: "Property Image" %>
+<% else %>
+<p>No image available</p>
+<% end %>
