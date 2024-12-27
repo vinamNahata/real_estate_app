@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  get 'interested_properties/index'
  
-  get 'deshboard/index'
+  # get 'deshboard/index'
   #get 'home/:index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
   get 'my_properties', to: 'properties#user_properties', as: 'user_properties'
   root "home#index"
   resources :properties
-  
-  
+  resources :interesteds, only: [:create]
+  resources :enquiries, only: [:new, :create]
+  resources :interested_properties, only: [:index, :destroy]
 end

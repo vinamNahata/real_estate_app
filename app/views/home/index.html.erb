@@ -1,20 +1,46 @@
-<h1>All Properties</h1>
+<h1 class="text-center mb-4">All Properties</h1>
 
 <div class="row">
   <% @properties.each do |property| %>
     <div class="col-md-4 mb-4">
       <!-- Property Card -->
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1605146769289-440113cc3d00?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D<%#= property.image_url %>" class="card-img-top" alt="<%= property.name %>">
+      <div class="card h-100 shadow-sm">
+        <!-- Carousel -->
+        <div id="carouselProperty<%= property.id %>" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <% if property.images.any? %>
+              <% property.images.each_with_index do |image, index| %>
+                <div class="carousel-item <%= 'active' if index == 0 %>">
+                  <%= image_tag image, class: "d-block w-100", alt: property.name %>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="carousel-item active">
+                <img src="https://via.placeholder.com/300x200" class="d-block w-100" alt="Placeholder Image">
+              </div>
+            <% end %>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselProperty<%= property.id %>" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselProperty<%= property.id %>" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+        <!-- Card Body -->
         <div class="card-body">
           <h5 class="card-title"><%= property.name %></h5>
-          <p class="card-text"><%= property.description %></p>
+          <p class="card-text"><%= truncate(property.description, length: 100) %></p>
           <p><strong>Price:</strong> <%= number_to_currency(property.price) %></p>
           <p><strong>Location:</strong> <%= property.location %></p>
-          <%= link_to 'Intrested', property_path(property), class: 'btn btn-primary' %>
-           <div class="actions">
-              <%= link_to 'View Details', property_path(property), class: 'btn btn-primary' %>
-           </div>
+        </div>
+
+        <!-- Card Footer -->
+        <div class="card-footer text-center">
+          <%= link_to 'View Details', property_path(property), class: 'btn btn-primary' %>
         </div>
       </div>
     </div>

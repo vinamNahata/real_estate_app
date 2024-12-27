@@ -1,26 +1,42 @@
-<h1>Add Property</h1>
-<%= form_with model: @property, url: properties_path, local: true do |form| %>
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-  <div>
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
-  <div>
-    <%= form.label :price %>
-    <%= form.number_field :price %>
-  </div>
-  <div>
-    <%= form.label :location %>
-    <%= form.text_field :location %>
-  </div>
-  <div>
-    <%= form.label :image %>
-    <%= form.file_field :image %>
-  </div>
-  <div>
-    <%= form.submit 'Submit Property', class: 'btn btn-success' %>
-  </div>
-<% end %>
+<h1 class="text-center my-4">Add Property</h1>
+
+<div class="container">
+  <%= form_with model: @property, url: properties_path, local: true, html: { class: 'needs-validation' } do |form| %>
+    <div class="row">
+      <!-- Name Field -->
+      <div class="col-md-6 mb-3">
+        <%= form.label :name, class: 'form-label' %>
+        <%= form.text_field :name, class: 'form-control', placeholder: 'Enter property name', required: true %>
+      </div>
+
+      <!-- Description Field -->
+      <div class="col-md-12 mb-3">
+        <%= form.label :description, class: 'form-label' %>
+        <%= form.text_area :description, class: 'form-control', placeholder: 'Enter property description', rows: 5, required: true %>
+      </div>
+
+      <!-- Price Field -->
+      <div class="col-md-6 mb-3">
+        <%= form.label :price, class: 'form-label' %>
+        <%= form.number_field :price, class: 'form-control', placeholder: 'Enter property price', required: true %>
+      </div>
+
+      <!-- Location Field -->
+      <div class="col-md-6 mb-3">
+        <%= form.label :location, class: 'form-label' %>
+        <%= form.text_field :location, class: 'form-control', placeholder: 'Enter property location', required: true %>
+      </div>
+
+      <!-- Image Field -->
+      <div class="col-md-12 mb-3">
+  <%= form.label :images, 'Upload Images', class: 'form-label' %>
+  <%= form.file_field :images, multiple: true, class: 'form-control', required: false %>
+</div>
+
+      <!-- Submit Button -->
+      <div class="col-md-12 text-center">
+        <%= form.submit 'Submit Property', class: 'btn btn-success btn-lg' %>
+      </div>
+    </div>
+  <% end %>
+</div>

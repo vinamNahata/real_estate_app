@@ -1,0 +1,9 @@
+<h1>Send Enquiry for <%= @property.name %></h1>
+
+<%= form_with model: @enquiry, url: enquiries_path(property_id: @property.id), local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :message, "Your Message" %>
+    <%= form.text_area :message, class: "form-control", rows: 4 %>
+  </div>
+  <%= form.submit "Send Enquiry", class: "btn btn-primary" %>
+<% end %>

@@ -7,6 +7,26 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag "application", "data-turbolinks-track": "reload" %>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      margin-top: auto;
+    }
+  </style>
 </head>
 <body>
   <!-- Navbar -->
@@ -24,17 +44,17 @@
           <li class="nav-item">
             <%= link_to "My Properties", properties_path, class: "nav-link" %>
           </li>
-          <!-- User menu -->
           <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to "All Interested Properties", interested_properties_path, class: "btn btn-warning nav-link" %>
+            </li>
             <li class="nav-item dropdown">
               <%= link_to "#", class: "nav-link dropdown-toggle", id: "navbarDropdown", role: "button", data: { bs_toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" } do %>
                 <%= current_user.name %> <span class="caret"></span>
               <% end %>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><%= link_to "Profile", edit_user_registration_path, class: "dropdown-item" %></li>
-                <%= link_to 'logout', destroy_user_session_path,class: "dropdown-item",
-  data: {turbo_method: :delete, turbo_confirm: 'are you sure?'}%>
-              </li>
+                <li><%= link_to 'Logout', destroy_user_session_path, class: "dropdown-item", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></li>
               </ul>
             </li>
           <% else %>
@@ -48,12 +68,12 @@
   </nav>
 
   <!-- Main content -->
-  <div class="container mt-4">
+  <main class="container mt-4">
     <%= yield %>
-  </div>
+  </main>
 
   <!-- Footer -->
-  <footer class="bg-dark text-white text-center py-3 mt-4">
+  <footer>
     <p>&copy; <%= Time.now.year %> RealEstateApp. All rights reserved.</p>
   </footer>
 

@@ -1,7 +1,38 @@
-<h1><%= @property.name %></h1>
-<p><%= @property.description %></p>
-<p>Price: <%= number_to_currency(@property.price) %></p> <% if property.image.attached? %>
-<%= image_tag property.image, class: "property-image", alt: "Property Image" %>
+<h1 class="text-center mb-4"><%= @property.name %></h1>
+<p class="text-center"><%= @property.description %></p>
+<p class="text-center mb-4"><strong>Price:</strong> <%= number_to_currency(@property.price) %></p>
+
+<!-- Carousel for Property Images -->
+<% if @property.images.attached? %>
+  <div id="propertyCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <% @property.images.each_with_index do |image, index| %>
+        <div class="carousel-item <%= 'active' if index.zero? %>">
+          <%= image_tag image, class: "d-block w-100", alt: "Property Image #{index + 1}" %>
+        </div>
+      <% end %>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
 <% else %>
-<p>No image available</p>
+  <p class="text-center">No images available</p>
 <% end %>
+
+<!-- Buttons for Interested and Enquire -->
+<div class="d-flex justify-content-center mt-4">
+  <%= button_to "Interested", interesteds_path(property_id: @property.id), method: :post, class: "btn btn-primary me-3" %>
+
+  <!-- Only show Enquire button if the current user is NOT the property owner -->
+  <% if current_user != @property.user %>
+    <%= link_to "Enquire", new_enquiry_path(property_id: @property.id), class: "btn btn-secondary" %>
+  <% else %>
+    <p>You are the owner of this property, so no enquiry form is needed.</p>
+  <% end %>
+</div>

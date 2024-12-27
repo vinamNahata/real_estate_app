@@ -5,11 +5,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :properties, dependent: :destroy, foreign_key: :user_id
+  has_many :properties, dependent: :destroy
   has_many :bookings, dependent: :destroy
   has_many :enquiries, dependent: :destroy
   has_many :transactions, dependent: :destroy
   has_many :histories, dependent: :destroy
+  has_many :interesteds
+  has_many :interested_properties, through: :interesteds, source: :property
   after_create :send_welcome_email
 
 private
