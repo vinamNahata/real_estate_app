@@ -1,31 +1,29 @@
 <div class="row">
   <% @interested_properties.each do |property| %>
     <div class="col-md-4 mb-4">
-      <div class="card h-100">
+      <div class="card h-100 shadow-lg border-light rounded-3 overflow-hidden">
         <!-- Property Image -->
         <div class="card-img-top">
           <% if property.images.any? %>
-            <%= image_tag property.images.first, class: 'card-img-top', alt: property.name %>
+            <%= image_tag property.images.first, class: 'd-block w-100', style: 'height: 250px; object-fit: cover;', alt: property.name %>
           <% else %>
             <!-- Fallback to asset pipeline or external image if no property images are available -->
-            <%= image_tag 'https://via.placeholder.com/300x200.png?text=No+Image', class: 'card-img-top', alt: 'No image available' %>
+            <%= image_tag 'https://via.placeholder.com/300x200.png?text=No+Image', class: 'd-block w-100', style: 'height: 250px; object-fit: cover;', alt: 'No image available' %>
           <% end %>
         </div>
 
         <!-- Card Body -->
         <div class="card-body">
-          <h5 class="card-title"><%= property.name %></h5>
-          <p class="card-text"><%= truncate(property.description, length: 100) %></p>
-          <p><strong>Price:</strong> <%= number_to_currency(property.price) %></p>
-          <p><strong>Location:</strong> <%= property.location %></p>
+          <h5 class="card-title text-truncate" style="font-size: 1.2rem; font-weight: bold;"><%= property.name %></h5>
+          <p class="card-text text-muted" style="font-size: 0.9rem;"><%= truncate(property.description, length: 100) %></p>
+          <p class="card-text"><strong>Price:</strong> <%= number_to_currency(property.price) %></p>
+          <p class="card-text"><strong>Location:</strong> <%= property.location %></p>
         </div>
 
         <!-- Card Footer with Delete Option -->
-        <div class="card-footer text-center">
-          <%= link_to 'View Details', property_path(property), class: 'btn btn-primary' %>
-          
-          <!-- Delete Button -->
-          <%= button_to 'Remove from Interests', interested_property_path(property), method: :delete, class: 'btn btn-danger', data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to remove this property from your interests?' } %>
+        <div class="card-footer bg-light text-center py-3">
+          <%= link_to 'View Details', property_path(property), class: 'btn btn-primary btn-lg me-2' %>
+          <%= button_to 'Remove from Interests', interested_property_path(property), method: :delete, class: 'btn btn-danger btn-lg', data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to remove this property from your interests?' } %>
         </div>
       </div>
     </div>

@@ -1,44 +1,63 @@
-<h1>My Properties</h1>
+<h1 class="text-center my-4 text-primary">My Properties</h1>
 
 <div class="container mt-4">
   <% if @properties.any? %>
     <div class="row">
       <% @properties.each do |property| %>
         <div class="col-md-4 mb-4">
-          <div class="card h-100">
+          <div class="card h-100 shadow-lg border-light">
+            <!-- Property Image Carousel -->
             <% if property.images.attached? %>
-              <%= image_tag property.image, class: "card-img-top", alt: "Property Image" %>
+              <div id="propertyCarousel-<%= property.id %>" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+                  <% property.images.each_with_index do |image, index| %>
+                    <div class="carousel-item <%= 'active' if index.zero? %>">
+                      <%= image_tag image, class: "d-block w-100", style: "height: 250px; object-fit: cover;", alt: "Property Image #{index + 1}" %>
+                    </div>
+                  <% end %>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel-<%= property.id %>" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel-<%= property.id %>" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
             <% else %>
-              <img src="https://via.placeholder.com/150" class="card-img-top" alt="No Image Available">
+              <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="No Image Available">
             <% end %>
+
+            <!-- Card Body -->
             <div class="card-body">
-              <h5 class="card-title"><%= property.name %></h5>
-              <p class="card-text"><%= truncate(property.description, length: 100) %></p>
+              <h5 class="card-title text-truncate" style="font-size: 1.1rem;"><%= property.name %></h5>
+              <p class="card-text text-muted"><%= truncate(property.description, length: 100) %></p>
               <p class="card-text"><strong>Location:</strong> <%= property.location %></p>
               <p class="card-text"><strong>Price:</strong> <%= number_to_currency(property.price) %></p>
             </div>
-            <div class="card-footer text-center">
-              <%= link_to 'View Details', property_path(property), class: 'btn btn-primary btn-sm me-2' %>
-              
-              
-            <%= link_to "delete", property_path(property), data: {
-              turbo_method: :delete,
-              turbo_confirm: "Are you sure?"
-            },class: 'btn btn-danger btn-sm'  %>
-          
 
+            <!-- Card Footer -->
+            <div class="card-footer text-center bg-light">
+              <%= link_to 'View Details', property_path(property), class: 'btn btn-primary btn-sm me-2' %>
+              <%= link_to "Delete", property_path(property), data: { 
+                turbo_method: :delete, 
+                turbo_confirm: "Are you sure?" 
+              }, class: 'btn btn-danger btn-sm' %>
             </div>
           </div>
         </div>
       <% end %>
     </div>
-    <div class="text-center">
-      <%= link_to 'Add New Property', new_property_path, class: 'btn btn-success' %>
+    <!-- Add New Property Button -->
+    <div class="text-center mt-4">
+      <%= link_to 'Add New Property', new_property_path, class: 'btn btn-success btn-lg' %>
     </div>
   <% else %>
-    <div class="alert alert-info" role="alert">
+    <!-- No Properties Alert -->
+    <div class="alert alert-warning text-center" role="alert">
       <p>You don't have any properties yet.</p>
-      <%= link_to 'Add a Property', new_property_path, class: 'btn btn-primary' %>
+      <%= link_to 'Add a Property', new_property_path, class: 'btn btn-primary mt-2' %>
     </div>
   <% end %>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_26_174839) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_23_053119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,15 +80,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_26_174839) do
     t.index ["user_id"], name: "index_interesteds_on_user_id"
   end
 
-  create_table "interests", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "property_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["property_id"], name: "index_interests_on_property_id"
-    t.index ["user_id"], name: "index_interests_on_user_id"
-  end
-
   create_table "payments", force: :cascade do |t|
     t.bigint "booking_id", null: false
     t.decimal "amount"
@@ -143,8 +134,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_26_174839) do
   add_foreign_key "histories", "users"
   add_foreign_key "interesteds", "properties"
   add_foreign_key "interesteds", "users"
-  add_foreign_key "interests", "properties"
-  add_foreign_key "interests", "users"
   add_foreign_key "payments", "bookings"
   add_foreign_key "properties", "users"
   add_foreign_key "transactions", "users"

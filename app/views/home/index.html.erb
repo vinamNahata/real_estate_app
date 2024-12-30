@@ -3,23 +3,30 @@
 <div class="row">
   <% @properties.each do |property| %>
     <div class="col-md-4 mb-4">
-      <!-- Property Card -->
-      <div class="card h-100 shadow-sm">
+      <!-- Property Card with a Background Color -->
+      <div class="card h-100 shadow-sm bg-light">
         <!-- Carousel -->
-        <div id="carouselProperty<%= property.id %>" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselProperty<%= property.id %>" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
           <div class="carousel-inner">
             <% if property.images.any? %>
               <% property.images.each_with_index do |image, index| %>
                 <div class="carousel-item <%= 'active' if index == 0 %>">
-                  <%= image_tag image, class: "d-block w-100", alt: property.name %>
+                  <!-- Aspect Ratio Utility for Image -->
+                  <div class="ratio ratio-16x9">
+                    <%= image_tag image, class: "d-block w-100", alt: property.name %>
+                  </div>
                 </div>
               <% end %>
             <% else %>
               <div class="carousel-item active">
-                <img src="https://via.placeholder.com/300x200" class="d-block w-100" alt="Placeholder Image">
+                <!-- Placeholder image if no images are available -->
+                <div class="ratio ratio-16x9">
+                  <img src="https://via.placeholder.com/300x200" class="d-block w-100" alt="Placeholder Image">
+                </div>
               </div>
             <% end %>
           </div>
+          <!-- Carousel Controls -->
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselProperty<%= property.id %>" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
@@ -30,17 +37,17 @@
           </button>
         </div>
 
-        <!-- Card Body -->
-        <div class="card-body">
-          <h5 class="card-title"><%= property.name %></h5>
-          <p class="card-text"><%= truncate(property.description, length: 100) %></p>
+        <!-- Card Body with a Text Background Color -->
+        <div class="card-body bg-light">
+          <h5 class="card-title text-truncate text-primary"><%= property.name %></h5>
+          <p class="card-text text-muted"><%= truncate(property.description, length: 100) %></p>
           <p><strong>Price:</strong> <%= number_to_currency(property.price) %></p>
           <p><strong>Location:</strong> <%= property.location %></p>
         </div>
 
-        <!-- Card Footer -->
-        <div class="card-footer text-center">
-          <%= link_to 'View Details', property_path(property), class: 'btn btn-primary' %>
+        <!-- Card Footer with Button Styling -->
+        <div class="card-footer text-center bg-secondary text-white">
+          <%= link_to 'View Details', property_path(property), class: 'btn btn-light btn-sm' %>
         </div>
       </div>
     </div>
